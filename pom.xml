@@ -13,16 +13,21 @@
         <maven.compiler.target>12</maven.compiler.target>
         <vertx.version>3.8.3</vertx.version>
         <mysql.version>8.0.18</mysql.version>
+        <log4j.version>2.12.1</log4j.version>
         <main.verticle>com.github.fredpena.MainVerticle</main.verticle>
     </properties>
     
     <dependencies>
         <dependency>
             <groupId>io.vertx</groupId>
-            <artifactId>vertx-web</artifactId>
+            <artifactId>vertx-core</artifactId>
             <version>${vertx.version}</version>
         </dependency>
- 
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web</artifactId>
+            <version>${vertx.version}</version>
+        </dependency> 
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-codegen</artifactId>
@@ -35,11 +40,15 @@
             <version>${vertx.version}</version>
             <classifier>processor</classifier>
         </dependency>
-  
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-jdbc-client</artifactId>
             <version>${vertx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
