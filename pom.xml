@@ -14,6 +14,7 @@
         <vertx.version>3.8.3</vertx.version>
         <mysql.version>8.0.18</mysql.version>
         <log4j.version>2.12.1</log4j.version>
+        <groovy.version>2.4.12</groovy.version>
         <main.verticle>com.github.fredpena.MainVerticle</main.verticle>
     </properties>
     
@@ -30,6 +31,11 @@
         </dependency> 
         <dependency>
             <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-client</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
             <artifactId>vertx-codegen</artifactId>
             <version>${vertx.version}</version>
             <scope>compile</scope>
@@ -43,6 +49,11 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-jdbc-client</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-config</artifactId>
             <version>${vertx.version}</version>
         </dependency>
         <dependency>

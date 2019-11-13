@@ -1,0 +1,5 @@
+{
+    "http.url": "localhost",
+    "http.port": 8085,
+    "workers": 2
+}
