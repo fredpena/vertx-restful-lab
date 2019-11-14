@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.example01;
+package com.github.fredpena.example;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -13,7 +13,6 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
-import io.vertx.ext.web.handler.LoggerHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 
@@ -21,11 +20,11 @@ import io.vertx.ext.web.sstore.LocalSessionStore;
  * @author Fred Pena fantpena@gmail.com
  * <p>
  * <p>
- * EXAMPLE: 6
+ * EXAMPLE: 7
  */
-public class SessionHandlerExample extends AbstractVerticle {
+public class ServerSession extends AbstractVerticle {
 
-    final Logger LOG = LoggerFactory.getLogger(SessionHandlerExample.class);
+    final Logger LOG = LoggerFactory.getLogger(ServerSession.class);
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
@@ -51,7 +50,7 @@ public class SessionHandlerExample extends AbstractVerticle {
         server.requestHandler(router)
                 .listen(8080, ar -> {
                     if (ar.succeeded()) {
-                        LOG.info("vertx-restful-lab: Deploy CookieHandler Verticle in the port: {}", ar.result().actualPort());
+                        LOG.info("vertx-restful-lab: Deploy ServerSession Verticle in the port: {}", ar.result().actualPort());
                         startPromise.complete();
                     } else {
                         startPromise.fail(ar.cause());
@@ -63,6 +62,6 @@ public class SessionHandlerExample extends AbstractVerticle {
         System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.Log4j2LogDelegateFactory");
 
         Vertx vertx = Vertx.vertx();
-        vertx.deployVerticle(new SessionHandlerExample());
+        vertx.deployVerticle(new ServerSession());
     }
 }

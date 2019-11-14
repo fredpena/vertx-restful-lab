@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.example02;
+package com.github.fredpena.demo1;
 
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
@@ -46,7 +46,7 @@ public class App {
                 JsonObject config = json.result();
                 LOG.info("Starting the app with config: {}\n", json);
 
-                vertx.deployVerticle(ServerVerticle.class.getCanonicalName(), new DeploymentOptions()
+                vertx.deployVerticle(CoffeeRestApiVerticle.class.getCanonicalName(), new DeploymentOptions()
                         .setConfig(config));
 
                 vertx.deployVerticle(WorkerVerticle.class.getCanonicalName(), new DeploymentOptions()

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.example01;
+package com.github.fredpena.example;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -21,10 +21,12 @@ import io.vertx.ext.web.Router;
  * encarga de tener registradas las rutas a las que nuestra aplicación va a
  * responder, para cuando reciba una petición sobre una de ellas llamar a su
  * manejado asociado.
+ *
+ * EXAMPLE: 1
  */
-public class Router01 extends AbstractVerticle {
+public class ServerOverview extends AbstractVerticle {
 
-    final Logger LOG = LoggerFactory.getLogger(Router01.class);
+    final Logger LOG = LoggerFactory.getLogger(ServerOverview.class);
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
@@ -37,10 +39,14 @@ public class Router01 extends AbstractVerticle {
          * RoutingContext, le añadimos una cabecera y respondemos al cliente con
          * el mensaje Hello Vert.x!. Importante la llamada a end para que la
          * respuesta se envíe al cliente.
+         *
+         * Endpoint:
+         *
+         * http://localhost:8080/hello
          */
         router.route("/hello")
                 .handler(routingContext -> {
-                    LOG.info("vertx-restful-lab: Router /hello");
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:/hello - HTTP GET request");
 
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "text/plain");
@@ -60,15 +66,31 @@ public class Router01 extends AbstractVerticle {
          * final de las rutas son ignoradas, lo que significa que las siguientes
          * rutas /user/profile/ y /user/profile// son equivalentes a la
          * anterior, pero /users/profile/edit no es igual.
+         *
+         * Endpoint:
+         *
+         * http://localhost:8080/user/profile
+         *
+         * http://localhost:8080/user/profile/edit
          */
         router.route("/user/profile")
                 .handler(routingContext -> {
-                    LOG.info("vertx-restful-lab: Router /user/profile");
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:/user/profile - HTTP GET request");
 
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "text/plain");
 
                     response.end("Esto es una ruta exactas");
+                });
+
+        router.route("/user/profile/edit")
+                .handler(routingContext -> {
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:/user/profile - HTTP GET request");
+
+                    HttpServerResponse response = routingContext.response();
+                    response.putHeader("content-type", "text/plain");
+
+                    response.end("En este enpoint editariamos el perfil");
                 });
 
         /**
@@ -78,55 +100,30 @@ public class Router01 extends AbstractVerticle {
          * cómoda. Para definir estas rutas se usa el símbolo * de forma que un
          * ruta como la siguente:
          *
-         * router.route("/user/profile/*").handler( ... );
+         * router.route("/client/profile/*").handler( ... );
          *
          * Escucharía todas las peticiones que comenzarán por ella como:
-         * /user/profile, /user/profile/edit, /user/profile/me/photo.jpg … y
-         * todas ellas serían manejadas por el mismo handler.
+         * /client/profile, /client/profile/edit, /client/profile/me/photo.jpg …
+         * y todas ellas serían manejadas por el mismo handler.
+         *
+         * Endpoint:
+         *
+         * http://localhost:8080/client/profile
+         *
+         * http://localhost:8080/client/profile/edit
+         *
+         * http://localhost:8080/client/profile/me
+         *
+         * http://localhost:8080/client/profile/me/photo.jpg
          */
-        router.route("/user/profile/*")
+        router.route("/client/profile/*")
                 .handler(routingContext -> {
-                    LOG.info("vertx-restful-lab: Router /user/profile/*");
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:/client/profile/* - HTTP GET request");
 
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "text/plain");
 
                     response.end("Rutas que comienzan igual pero difieren en la parte final");
-                });
-
-        /**
-         * La última opción que nos deja Vert.x para definir rutas, es usar
-         * expresiones regulares:
-         *
-         * route.route().pathRegex(".*profile").handler(...);
-         *
-         * // Otra opción
-         *
-         * route.routeWithRegex(".*profile").handler(...);
-         *
-         * En los dos ejemplos siguiente se ejecutaría el manejado para todas
-         * las rutas que contengan profile: /users/profile, /profile,
-         * /users/profile/me … Cualquier expresión regular nos valdría para
-         * indicar una ruta.
-         */
-        router.route().pathRegex(".*expression")
-                .handler(routingContext -> {
-                    LOG.info("vertx-restful-lab: Router:pathRegex .*expression");
-
-                    HttpServerResponse response = routingContext.response();
-                    response.putHeader("content-type", "text/plain");
-
-                    response.end("Expresiones regulares: .*expression");
-                });
-
-        router.routeWithRegex(".*regular")
-                .handler(routingContext -> {
-                    LOG.info("vertx-restful-lab: Router:routeWithRegex .*regular");
-
-                    HttpServerResponse response = routingContext.response();
-                    response.putHeader("content-type", "text/plain");
-
-                    response.end("Expresiones regulares: .*regular");
                 });
 
         /**
@@ -136,17 +133,67 @@ public class Router01 extends AbstractVerticle {
          * Posteriormente dentro del handler podemos acceder a ellos obteniendo
          * el objeto HttpServerRequest desde el routingContext y llamando al
          * método getParam():
+         *
+         * Endpoint:
+         *
+         * http://localhost:8080/user/Maria
+         *
+         * http://localhost:8080/user/Juan
          */
-        router.route("/user/:userId")
+        router.route("/supplier/:userId")
                 .handler(routingContext -> {
-                    LOG.info("vertx-restful-lab: Router /user/:userId");
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:/user/:userId - HTTP GET request");
 
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "text/plain");
 
                     String userId = routingContext.request().getParam("userId");
 
-                    response.end("Hello, " + userId);
+                    response.end("Hello " + userId + ", how are you?");
+                });
+
+        /**
+         * La última opción que nos deja Vert.x para definir rutas, es usar
+         * expresiones regulares:
+         *
+         * route.route().pathRegex(".*expression").handler(...);
+         *
+         * // Otra opción
+         *
+         * route.routeWithRegex(".*regular").handler(...);
+         *
+         * En los dos ejemplos siguiente se ejecutaría el manejado para todas
+         * las rutas que contengan expression: /users/expression, /expression,
+         * /users/expression/me … Cualquier expresión regular nos valdría para
+         * indicar una ruta.
+         *
+         * Endpoint:
+         *
+         * http://localhost:8080/users/expression
+         *
+         * http://localhost:8080/expression
+         *
+         * http://localhost:8080/users/profile/expression
+         *
+         */
+        router.route().pathRegex(".*expression")
+                .handler(routingContext -> {
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:.*expression - URI pathRegex");
+
+                    HttpServerResponse response = routingContext.response();
+                    response.putHeader("content-type", "text/plain");
+
+                    response.end("Expresiones regulares: .*expression");
+                });
+
+        router.routeWithRegex(".*regular")
+                .handler(routingContext -> {
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:.*regular - URI routeWithRegex");
+
+                    HttpServerResponse response = routingContext.response();
+                    response.putHeader("content-type", "text/plain");
+
+                    response.end("Expresiones regulares: .*regular");
                 });
 
         /**
@@ -155,16 +202,20 @@ public class Router01 extends AbstractVerticle {
          * usar los grupos de captura.
          *
          * En el ejemplo sigueinte se está capturando dos parámetros que vienen
-         * separados por el carácter /. Es decir, en la ruta /user/profile
-         * tendremos en param0 user y en param1 profile. A partir de aquí
-         * podemos complicar la expresión regular tanto como queramos y utilizar
+         * separados por el carácter /. Es decir, en la ruta /user/client
+         * tendremos en param0 user y en param1 client. A partir de aquí podemos
+         * complicar la expresión regular tanto como queramos y utilizar
          * distintos grupos de captura para recoger los valores que nos
          * interese.
+         *
+         * Endpoint:
+         *
+         * http://localhost:8080/user/client
          */
         router.routeWithRegex(".*client")
                 .pathRegex("\\/([^\\/]+)\\/([^\\/]+)")
                 .handler(routingContext -> {
-                    LOG.info("vertx-restful-lab: Router:routeWithRegex .*client");
+                    LOG.info("vertx-restful-lab:ServerOverview:  path:.*client - URI routeWithRegex");
 
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "text/plain");
@@ -176,13 +227,13 @@ public class Router01 extends AbstractVerticle {
                 });
 
         /**
-         * Le indicamos al server que el manejo de las peticiones se llevará a cabo
-         * mediante el route y lo ponemos a escuchar en el puerto 8080.
+         * Le indicamos al server que el manejo de las peticiones se llevará a
+         * cabo mediante el route y lo ponemos a escuchar en el puerto 8080.
          */
         server.requestHandler(router)
                 .listen(8080, ar -> {
                     if (ar.succeeded()) {
-                        LOG.info("vertx-restful-lab: Deploy Router01 Verticle in the port: {}", ar.result().actualPort());
+                        LOG.info("vertx-restful-lab: Deploy ServerOverview Verticle in the port: {}", ar.result().actualPort());
                         startPromise.complete();
                     } else {
                         startPromise.fail(ar.cause());
@@ -194,7 +245,7 @@ public class Router01 extends AbstractVerticle {
         System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.Log4j2LogDelegateFactory");
 
         Vertx vertx = Vertx.vertx();
-        vertx.deployVerticle(new Router01());
+        vertx.deployVerticle(new ServerOverview());
     }
 
 }

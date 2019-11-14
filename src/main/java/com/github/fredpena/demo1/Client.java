@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.example02;
+package com.github.fredpena.demo1;
 
 import com.github.fredpena.utils.RandomCoffee;
 import io.vertx.config.ConfigRetriever;
@@ -61,7 +61,7 @@ public class Client extends AbstractVerticle {
                                 JsonObject body = response.bodyAsJsonObject();
 
                                 if (response.statusCode() == 200) {
-                                    LOG.info("Order {} Sent! For Customer: {}, Coffee: {}, Size: {}, instance:{}\n", body.getString("id"), body.getString("customer"), body.getString("type"), body.getString("size"), this);
+                                    LOG.info("Order {} Sent! For Customer: {}, Coffee: {}, Size: {}\n", body.getString("id"), body.getString("customer"), body.getString("type"), body.getString("size"));
                                 } else {
                                     LOG.error("Error {}", body.getString("message"));
                                 }

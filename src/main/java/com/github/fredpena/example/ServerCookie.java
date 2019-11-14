@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.example01;
+package com.github.fredpena.example;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -16,23 +16,36 @@ import io.vertx.ext.web.Router;
 
 /**
  * @author Fred Pena fantpena@gmail.com
- * <p>
- * <p>
- * EXAMPLE: 5
+ *
+ * Manejo de cookies
+ *
+ * Vert.x proporciona una forma sencilla para manejar las cookies. Al igual que
+ * se hace para para los datos en el cuerpo de la petición, para poder acceder a
+ * las cookies tenemos que activar un handler. Este handler se llama
+ * CookieHandler y lo activaremos de la siguiente forma:
+ *
+ * EXAMPLE: 6
  */
-public class CookieHandler extends AbstractVerticle {
+public class ServerCookie extends AbstractVerticle {
 
-    final Logger LOG = LoggerFactory.getLogger(CookieHandler.class);
+    final Logger LOG = LoggerFactory.getLogger(ServerCookie.class);
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
         HttpServer server = vertx.createHttpServer();
         Router router = Router.router(vertx);
 
-        router.post("/comment")
+        /**
+         * podemos obtener una cookie por su nombre con getCookie u obtener
+         * todas ellas con cookieMap. El RoutingContext nos proporciona dos
+         * métodos, uno para añadir una cookie nueva addCookie y otro para
+         * eliminarlas removeCookie
+         */
+        router.get("/comment")
                 .handler(routingContext -> {
                     Cookie someCookie = routingContext.getCookie("visits");
 
+                    // routingContext.removeCookie("visits");
                     long visits = 0;
                     if (someCookie != null) {
                         String cookieValue = someCookie.getValue();
@@ -45,6 +58,8 @@ public class CookieHandler extends AbstractVerticle {
                     // incrementar el seguimiento
                     visits++;
 
+                    routingContext.response().end("visits: " + visits);
+
                     // Agregue una cookie: esto se volverá a escribir en la respuesta automáticamente
                     routingContext.addCookie(Cookie.cookie("visits", "" + visits));
 
@@ -55,14 +70,19 @@ public class CookieHandler extends AbstractVerticle {
                 .handler(routingContext -> {
                     Cookie someCookie = routingContext.getCookie("visits");
 
-                    routingContext.response().end("visits: " + someCookie.getValue());
-                });
+                    if (someCookie == null) {
+                        routingContext.response().setStatusCode(404);
+                        routingContext.response().end("Not Found");
+                    } else {
+                        routingContext.response().end("visits: " + someCookie.getValue());
+                    }
 
+                });
 
         server.requestHandler(router)
                 .listen(8080, ar -> {
                     if (ar.succeeded()) {
-                        LOG.info("vertx-restful-lab: Deploy CookieHandler Verticle in the port: {}", ar.result().actualPort());
+                        LOG.info("vertx-restful-lab: Deploy ServerCookie Verticle in the port: {}", ar.result().actualPort());
                         startPromise.complete();
                     } else {
                         startPromise.fail(ar.cause());
@@ -74,6 +94,6 @@ public class CookieHandler extends AbstractVerticle {
         System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.Log4j2LogDelegateFactory");
 
         Vertx vertx = Vertx.vertx();
-        vertx.deployVerticle(new CookieHandler());
+        vertx.deployVerticle(new ServerCookie());
     }
 }

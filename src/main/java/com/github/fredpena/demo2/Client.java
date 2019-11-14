@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.example03;
+package com.github.fredpena.demo2;
 
 import com.github.fredpena.utils.RandomCoffee;
 import io.vertx.config.ConfigRetriever;
@@ -14,7 +14,6 @@ import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
-import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -62,7 +61,7 @@ public class Client extends AbstractVerticle {
                                 JsonObject body = response.bodyAsJsonObject();
 
                                 if (response.statusCode() == 200) {
-                                    LOG.info("Order {} Sent! For Customer: {}, Coffee: {}, Size: {}, instance:{}\n", body.getString("id"), body.getString("customer"), body.getString("type"), body.getString("size"), this);
+                                    LOG.info("Thanks for the good coffee!!!  Order {}, Customer: {}, Coffee: {}, Size: {}\n", body.getString("id"), body.getString("customer"), body.getString("type"), body.getString("size"));
                                 } else {
                                     LOG.error("Error {}", body.getString("message"));
                                 }
@@ -75,15 +74,6 @@ public class Client extends AbstractVerticle {
                     vertx.cancelTimer(handler);
                 }
             }
-        });
-
-        EventBus eb = vertx.eventBus();
-
-        eb.<JsonObject>consumer("processed.coffee.order", message -> {
-            JsonObject body = message.body();
-
-            LOG.info("Order {} completed in {} milliseconds, Calling {}\n\n", body.getString("id"), body.getLong("time"), body.getString("customer")); //message.reply(body);
-
         });
     }
 
