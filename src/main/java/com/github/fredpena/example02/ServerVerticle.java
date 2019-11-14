@@ -67,7 +67,7 @@ public class ServerVerticle extends AbstractVerticle {
                 .produces("application/json")
                 .handler(this::processCoffeeOrder);
 
-        server.requestHandler(router::accept)
+        server.requestHandler(router)
                 .listen(port, ar -> {
                     if (ar.succeeded()) {
                         startPromise.complete();

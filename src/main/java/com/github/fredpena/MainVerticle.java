@@ -11,4 +11,8 @@ package com.github.fredpena;
  */
 public class MainVerticle {
 
+    public static void main(String[] args) {
+
+    }
+
 }

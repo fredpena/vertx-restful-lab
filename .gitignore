@@ -1,1 +1,6 @@
 /nb-configuration.xml
+.idea/
+/vertx-restful-lab.iml
+target/
+src/main/asciidoc/
+src/main/generated/
