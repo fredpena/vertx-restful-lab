@@ -13,14 +13,14 @@ import java.util.Random;
  */
 public class RandomCoffee {
 
-    private String[] types;
-    private String[] sizes;
-    private String[] customers;
+    private final String[] types;
+    private final String[] sizes;
+    private final String[] customers;
 
-    public RandomCoffee(String[] types, String[] sizes, String[] customers) {
-        this.types = types;
-        this.sizes = sizes;
-        this.customers = customers;
+    public RandomCoffee() {
+        this.types = new String[]{"americano", "latte", "cappucino", "mocha"};
+        this.sizes = new String[]{"small", "large", "medium"};
+        this.customers = new String[]{"aine", "bernard", "charline", "denise", "esteban", "françois", "geraldine", "herbert"};
     }
 
     private String getType() {

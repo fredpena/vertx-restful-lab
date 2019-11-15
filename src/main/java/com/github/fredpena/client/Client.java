@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.demo1;
+package com.github.fredpena.client;
 
 import com.github.fredpena.utils.RandomCoffee;
 import io.vertx.config.ConfigRetriever;
@@ -43,14 +43,10 @@ public class Client extends AbstractVerticle {
 
         WebClient client = WebClient.create(vertx);
 
-        String[] types = new String[]{"americano", "latte", "cappucino", "mocha"};
-        String[] sizes = new String[]{"small", "large", "medium"};
-        String[] customers = new String[]{"aine", "bernard", "charline", "denise", "esteban", "françois", "geraldine", "herbert"};
-
         vertx.setPeriodic((5 * 1000), handler -> {
             for (int i = 0; i < 3; i++) {
 
-                RandomCoffee randomCoffee = new RandomCoffee(types, sizes, customers);
+                RandomCoffee randomCoffee = new RandomCoffee();
                 JsonObject object = randomCoffee.getCoffee().toJson();
 
                 client.post(port, url, "/coffee")

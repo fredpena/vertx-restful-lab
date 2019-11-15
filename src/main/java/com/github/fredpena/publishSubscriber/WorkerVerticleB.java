@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.demo2;
+package com.github.fredpena.publishSubscriber;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -18,16 +18,16 @@ import java.util.UUID;
  *
  * @author Fred Pena fantpena@gmail.com
  */
-public class WorkerVerticle extends AbstractVerticle {
+public class WorkerVerticleB extends AbstractVerticle {
 
     private final Random random = new Random();
-    final Logger LOG = LoggerFactory.getLogger(WorkerVerticle.class);
+    final Logger LOG = LoggerFactory.getLogger(WorkerVerticleB.class);
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
 
         String id = UUID.randomUUID().toString();
-        LOG.info("Deploying WorkerVerticle - Instances ID: {}", id);
+        LOG.info("Deploying WorkerVerticleB - Instances ID: {}", id);
 
         EventBus eb = vertx.eventBus();
 
@@ -35,9 +35,9 @@ public class WorkerVerticle extends AbstractVerticle {
             JsonObject body = message.body();
 
             System.out.println("\n");
-            LOG.info("New request on Instances ID: {}", id);
+            LOG.info("New request in WorkerVerticleB, on Instances ID: {}", id);
 
-            LOG.info("Processing coffee order {} for Customer: {}, Coffee: {}, Size: {}", body.getString("id"), body.getString("customer"), body.getString("type"), body.getString("size"));
+            LOG.info("Processing coffee order {}, in WorkerVerticleB, for Customer: {}, Coffee: {}, Size: {}", body.getString("id"), body.getString("customer"), body.getString("type"), body.getString("size"));
 
             long startTime = System.currentTimeMillis();
             try {
@@ -47,9 +47,8 @@ public class WorkerVerticle extends AbstractVerticle {
             }
             long endTime = System.currentTimeMillis();
 
-            LOG.info("Order {} completed in {} milliseconds, Calling {}\n\n", body.getString("id"), (endTime - startTime), body.getString("customer"));
-
-            message.reply(body);
+            LOG.info("Order {}, in WorkerVerticleB completed in {} milliseconds, Calling {}\n\n", body.getString("id"), (endTime - startTime), body.getString("customer"));
+            //message.reply(body);
 
         });
 

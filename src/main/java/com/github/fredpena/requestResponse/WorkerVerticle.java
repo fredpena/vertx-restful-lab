@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.demo1;
+package com.github.fredpena.requestResponse;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -48,7 +48,8 @@ public class WorkerVerticle extends AbstractVerticle {
             long endTime = System.currentTimeMillis();
 
             LOG.info("Order {} completed in {} milliseconds, Calling {}\n\n", body.getString("id"), (endTime - startTime), body.getString("customer"));
-            //message.reply(body);
+
+            message.reply(body);
 
         });
 

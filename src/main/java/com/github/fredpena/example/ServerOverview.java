@@ -35,7 +35,7 @@ public class ServerOverview extends AbstractVerticle {
 
         /**
          * En este ejemplo podemos ver como en el router se ha registrado la
-         * ruta /path y en su manejador (handler), que recibe un objeto del tipo
+         * ruta /hello y en su manejador (handler), que recibe un objeto del tipo
          * RoutingContext, le añadimos una cabecera y respondemos al cliente con
          * el mensaje Hello Vert.x!. Importante la llamada a end para que la
          * respuesta se envíe al cliente.

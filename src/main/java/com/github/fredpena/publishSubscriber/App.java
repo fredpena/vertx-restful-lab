@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.fredpena.demo1;
+package com.github.fredpena.publishSubscriber;
 
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
@@ -49,11 +49,18 @@ public class App {
                 vertx.deployVerticle(CoffeeRestApiVerticle.class.getCanonicalName(), new DeploymentOptions()
                         .setConfig(config));
 
-                vertx.deployVerticle(WorkerVerticle.class.getCanonicalName(), new DeploymentOptions()
+                vertx.deployVerticle(WorkerVerticleA.class.getCanonicalName(), new DeploymentOptions()
                         .setConfig(config)
-                        .setWorkerPoolName("coffee-making-pool")
-                        .setWorkerPoolSize(5)
-                        .setInstances(5)
+                        .setWorkerPoolName("coffee-making-pool-a")
+                        .setWorkerPoolSize(3)
+                        .setInstances(3)
+                        .setWorker(true));
+
+                vertx.deployVerticle(WorkerVerticleB.class.getCanonicalName(), new DeploymentOptions()
+                        .setConfig(config)
+                        .setWorkerPoolName("coffee-making-pool-b")
+                        .setWorkerPoolSize(3)
+                        .setInstances(3)
                         .setWorker(true));
 
             } else {
