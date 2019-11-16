@@ -30,6 +30,8 @@ import io.vertx.ext.web.handler.BodyHandler;
 public class ServerHTTPMethod extends AbstractVerticle {
 
     final Logger LOG = LoggerFactory.getLogger(ServerHTTPMethod.class);
+    private static final int KB = 1024;
+    private static final int MB = 1024 * KB;
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
@@ -47,7 +49,7 @@ public class ServerHTTPMethod extends AbstractVerticle {
          * siguiente linea antes de cualquier petición que vaya a necesitar
          * obtener datos
          */
-        router.route().handler(BodyHandler.create());
+        router.route().handler(BodyHandler.create().setBodyLimit(50 * MB));
 
         /**
          * En el ejemplo siguiente únicamente se responderá a la ruta /user si

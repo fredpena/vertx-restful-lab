@@ -7,6 +7,7 @@ package com.github.fredpena.serviceProxy;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
 
 /**
  *
@@ -15,7 +16,7 @@ import io.vertx.core.Future;
 public class DrunkVerticle extends AbstractVerticle {
 
     @Override
-    public void start(Future<Void> startFuture) {
+    public void start(Promise<Void> startFuture) {
         BarmanService barmanService = BarmanService.createProxy(vertx, "beers.services"); 
 
         barmanService.giveMeARandomBeer("homer", b1 -> { 
