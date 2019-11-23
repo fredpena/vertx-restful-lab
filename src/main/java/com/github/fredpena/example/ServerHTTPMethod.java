@@ -86,6 +86,7 @@ public class ServerHTTPMethod extends AbstractVerticle {
          */
         router.post("/client")
                 .produces("application/json")
+                .consumes("application/json")
                 .handler(routingContext -> {
                     LOG.info("vertx-restful-lab:ServerHTTPMethod:  path:/client - HTTP POST request");
                     JsonObject object = routingContext.getBodyAsJson();

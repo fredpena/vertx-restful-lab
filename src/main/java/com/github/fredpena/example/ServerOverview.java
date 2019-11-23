@@ -8,7 +8,6 @@ package com.github.fredpena.example;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -29,7 +28,6 @@ public class ServerOverview extends AbstractVerticle {
 
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
-        HttpServer server = vertx.createHttpServer();
         Router router = Router.router(vertx);
 
         /**
@@ -50,10 +48,11 @@ public class ServerOverview extends AbstractVerticle {
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "text/plain");
 
-                    response.end("Hello Vert.x!");
+                    response.end("Hello Bar Camp 2019!");
                 });
 
-        server.requestHandler(router)
+        vertx.createHttpServer()
+                .requestHandler(router)
                 .listen(8080, ar -> {
                     if (ar.succeeded()) {
                         LOG.info("vertx-restful-lab: Deploy ServerOverview Verticle in the port: {}", ar.result().actualPort());

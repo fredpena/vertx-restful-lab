@@ -21,7 +21,7 @@ import io.vertx.ext.web.Router;
  * encarga de tener registradas las rutas a las que nuestra aplicación va a
  * responder, para cuando reciba una petición sobre una de ellas llamar a su
  * manejado asociado.
- *
+ * <p>
  * EXAMPLE: 1
  */
 public class ServerBasic extends AbstractVerticle {
@@ -117,7 +117,7 @@ public class ServerBasic extends AbstractVerticle {
          *
          * http://localhost:8080/user/Maria
          *
-         * http://localhost:8080/user/Juan
+         * http://localhost:8080/user/BarCamp2019
          */
         router.route("/supplier/:userId")
                 .handler(routingContext -> {
@@ -189,9 +189,9 @@ public class ServerBasic extends AbstractVerticle {
          *
          * Endpoint:
          *
-         * http://localhost:8080/user/client
+         * http://localhost:8080/BarCamp/2019
          */
-        router.routeWithRegex(".*client")
+        router.routeWithRegex(".*2019")
                 .pathRegex("\\/([^\\/]+)\\/([^\\/]+)")
                 .handler(routingContext -> {
                     LOG.info("vertx-restful-lab:ServerOverview:  path:.*client - URI routeWithRegex");
@@ -199,10 +199,10 @@ public class ServerBasic extends AbstractVerticle {
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "text/plain");
 
-                    String first = routingContext.request().getParam("param0");
-                    String second = routingContext.request().getParam("param1");
+                    String param0 = routingContext.request().getParam("param0");
+                    String param1 = routingContext.request().getParam("param1");
 
-                    response.end("Hello, " + first + " " + second);
+                    response.end("Hello, " + param0 + " " + param1 );
                 });
 
         /**
