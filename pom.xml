@@ -11,7 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>12</maven.compiler.source>
         <maven.compiler.target>12</maven.compiler.target>
-        <vertx.version>3.8.3</vertx.version>
+        <vertx.version>3.9.4</vertx.version>
         <mysql.version>8.0.18</mysql.version>
         <log4j.version>2.12.1</log4j.version>
         <groovy.version>2.4.12</groovy.version>
