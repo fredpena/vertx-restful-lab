@@ -11,6 +11,7 @@ import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ import java.util.UUID;
  */
 public class WorkerVerticleB extends AbstractVerticle {
 
-    private final Random random = new Random();
+    private final Random random = new SecureRandom();
     final Logger LOG = LoggerFactory.getLogger(WorkerVerticleB.class);
 
     @Override
