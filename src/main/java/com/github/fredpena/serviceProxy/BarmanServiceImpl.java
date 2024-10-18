@@ -10,6 +10,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -17,7 +18,7 @@ import java.util.Random;
 public class BarmanServiceImpl implements BarmanService {
 
     private final Map<String, Integer> bills;
-    private final Random random = new Random();
+    private final Random random = new SecureRandom();
     private final WebClient client;
 
     public BarmanServiceImpl(WebClient client) {
