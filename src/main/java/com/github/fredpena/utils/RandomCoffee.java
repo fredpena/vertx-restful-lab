@@ -5,6 +5,7 @@
  */
 package com.github.fredpena.utils;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 /**
@@ -24,19 +25,19 @@ public class RandomCoffee {
     }
 
     private String getType() {
-        Random random = new Random();
+        Random random = new SecureRandom();
         int randomNumber = random.nextInt(types.length);
         return types[randomNumber];
     }
 
     private String getSize() {
-        Random random = new Random();
+        Random random = new SecureRandom();
         int randomNumber = random.nextInt(sizes.length);
         return sizes[randomNumber];
     }
 
     private String getCustomer() {
-        Random random = new Random();
+        Random random = new SecureRandom();
         int randomNumber = random.nextInt(customers.length);
         return customers[randomNumber];
     }
